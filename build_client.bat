@@ -18,16 +18,17 @@ set serverDeploy=E:\games\dayz\servers\vanilla
 :: the name of the directories into which the client and server PBOs will be placed
 :: also, the name of the authority name for the key
 set modName=DayZ
-set serverName=DayZ_Server
+set serverName=Hive
 
 REM ----------- compile a single PBO -----------
 if [%1] gtr [] (
 
 	echo compiling %1
 
-	%tools%\cpbo.exe -y -p %home%\PBOs\%1                           %clientDeploy%\@%ModName%\addons\%1.pbo
-	%tools%\DSSignFile.exe %keyFiles%\%modName%.biprivatekey        %clientDeploy%\@%ModName%\addons\%1.pbo
-	copy                   %clientDeploy%\@%ModName%\addons\%1.pbo  %serverDeploy%\@%ModName%\addons\%1.pbo
+	%tools%\cpbo.exe -y -p %home%\PBOs\%1                                            %clientDeploy%\@%ModName%\addons\%1.pbo
+	%tools%\DSSignFile.exe %keyFiles%\%modName%.biprivatekey                         %clientDeploy%\@%ModName%\addons\%1.pbo
+	copy                   %clientDeploy%\@%ModName%\addons\%1.pbo                   %serverDeploy%\@%ModName%\addons\%1.pbo
+	copy                   %clientDeploy%\@%ModName%\addons\%1.pbo.%ModName%.bisign  %serverDeploy%\@%ModName%\addons\%1.pbo.%ModName%.bisign
 
 REM ----------- compile all PBOs -----------
 ) else (
