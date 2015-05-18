@@ -13,7 +13,7 @@ set keyFiles=E:\games\dayz_source\DayZ\keys
 set serverDeploy=E:\games\dayz\servers\vanilla
 
 :: the name of the directory into which the server PBOs will be placed
-set serverName=DayZ_Server
+set serverName=Hive
 
 
 ::=================================================================================::
@@ -32,10 +32,14 @@ copy %home%\* %serverDeploy%\@%serverName%
 xcopy %home%\binaries %ServerDeploy% /E /I /Y
 
 :: mission file
-xcopy %home%\MPMissions\dayz_Mod.chernarus %serverDeploy%\MPMissions /E /I /Y
+xcopy %home%\MPMissions %serverDeploy%\MPMissions /E /I /Y
 
 :: profile
-xcopy %home%\profile %serverDeploy%\profile /E /I /Y
+xcopy %home%\profile %serverDeploy%\cfgdayz /E /I /Y
+
+:: keys
+xcopy %keyFiles% %serverDeploy%\Keys\ /E /I /Y
+
 
 :: restart server
 sc \\192.168.56.101 start dayz-vanilla
