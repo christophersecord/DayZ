@@ -1,31 +1,11 @@
-@echo off
-
-:: root directory in which client code is located
-set home=E:\games\dayz_source\DayZ\client
-
-:: location of bohemia tools
-set tools=E:\games\dayz_source\DayZ\BITools
-
-:: location of the key files
-set keyFiles=E:\games\dayz_source\DayZ\keys
-
-:: location to deploy the client files
-set clientDeploy=E:\games\dayz\clients\vanilla
-
-:: location to deploy the server files
-set serverDeploy=E:\games\dayz\servers\vanilla
-
-:: the name of the directories into which the client and server PBOs will be placed
-:: also, the name of the authority name for the key
-set modName=DayZ
-set serverName=Hive
+call constants.bat
 
 REM ----------- compile a single PBO -----------
 if [%1] gtr [] (
 
 	echo compiling %1
 
-	%tools%\cpbo.exe -y -p %home%\PBOs\%1                                            %clientDeploy%\@%ModName%\addons\%1.pbo
+	%tools%\cpbo.exe -y -p %clientSource%\PBOs\%1                                    %clientDeploy%\@%ModName%\addons\%1.pbo
 	%tools%\DSSignFile.exe %keyFiles%\%modName%.biprivatekey                         %clientDeploy%\@%ModName%\addons\%1.pbo
 	copy                   %clientDeploy%\@%ModName%\addons\%1.pbo                   %serverDeploy%\@%ModName%\addons\%1.pbo
 	copy                   %clientDeploy%\@%ModName%\addons\%1.pbo.%ModName%.bisign  %serverDeploy%\@%ModName%\addons\%1.pbo.%ModName%.bisign
@@ -40,8 +20,8 @@ REM ----------- compile all PBOs -----------
 	mkdir %clientDeploy%\@%modName%\addons
 	mkdir %serverDeploy%\@%modName%\addons
 
-	copy %home%\* %clientDeploy%\@%modName%
-	copy %home%\* %serverDeploy%\@%modName%
+	copy %clientSource%\* %clientDeploy%\@%modName%
+	copy %clientSource%\* %serverDeploy%\@%modName%
 
 	call build_client.bat community_crossbow
 	call build_client.bat dayz
@@ -59,8 +39,10 @@ REM ----------- compile all PBOs -----------
 	call build_client.bat st_collision
 	call build_client.bat st_evasive
 
-	copy %keyFiles%\%modName%.bikey %clientDeploy%\keys\%modName%.bikey
-	copy %keyFiles%\%modName%.bikey %serverDeploy%\keys\%modName%.bikey
+	copy %keyFiles%\%modName%.bikey %clientDeploy%\keys\
+	copy %keyFiles%\%modName%.bikey %serverDeploy%\keys\
+
+	copy %root%\starup_batch_files\start_client.bat %clientDeploy%
 
 	sc \\192.168.56.101 start dayz-vanilla
 

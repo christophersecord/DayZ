@@ -1,20 +1,4 @@
-@echo off
-
-:: root directory in which server code is located
-set home=E:\games\dayz_source\DayZ\server
-
-:: location of bohemia tools
-set tools=E:\games\dayz_source\DayZ\BITools
-
-:: location of the key files
-set keyFiles=E:\games\dayz_source\DayZ\keys
-
-:: location to deploy the server files
-set serverDeploy=E:\games\dayz\servers\vanilla
-
-:: the name of the directory into which the server PBOs will be placed
-set serverName=Hive
-
+call constants.bat
 
 ::=================================================================================::
 :: stop running server
@@ -24,21 +8,18 @@ sc \\192.168.56.101 stop dayz-vanilla
 
 mkdir %serverDeploy%\@%serverName%\addons
 
-copy %home%\* %serverDeploy%\@%serverName%
-
-%tools%\cpbo.exe -y -p %home%\PBOs\dayz_server %serverDeploy%\@%serverName%\addons\dayz_server.pbo
+%tools%\cpbo.exe -y -p %serverSource%\PBOs\dayz_server %serverDeploy%\@%serverName%\addons\dayz_server.pbo
 
 :: binaries
-xcopy %home%\binaries %ServerDeploy% /E /I /Y
+xcopy %serverSource%\binaries %ServerDeploy% /E /I /Y
 
 :: mission file
-xcopy %home%\MPMissions %serverDeploy%\MPMissions /E /I /Y
+xcopy %serverSource%\MPMissions %serverDeploy%\MPMissions /E /I /Y
 
 :: profile
-xcopy %home%\profile %serverDeploy%\cfgdayz /E /I /Y
+xcopy %serverSource%\profile %serverDeploy%\cfgdayz /E /I /Y
 
-:: keys
-xcopy %keyFiles% %serverDeploy%\Keys\ /E /I /Y
+copy %home%\starup_batch_files\start_server.bat %serverDeploy%
 
 
 :: restart server
