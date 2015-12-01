@@ -1,18 +1,14 @@
--- --------------------------------------------------------
--- Host:                         184.164.146.210
--- Server version:               5.5.27 - MySQL Community Server (GPL)
--- Server OS:                    Win32
--- HeidiSQL Version:             9.1.0.4867
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
--- Dumping structure for procedure dayzhivemind.pCleanup
-DELIMITER //
-CREATE DEFINER=`dayzhivemind`@`%` PROCEDURE `pCleanup`()
+/*!50003 DROP PROCEDURE IF EXISTS `pCleanup` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`dayz`@`localhost` PROCEDURE `pCleanup`()
 BEGIN 
 #Last ran
 	update event_scheduler set LastRun = NOW() where System = "pCleanup";
@@ -23,7 +19,17 @@ BEGIN
 #remove damaged objects
         DELETE
                 FROM object_data
-                WHERE Damage = 1;
+                WHERE CharacterID != 0 AND Damage = 1;
+
+#remove damaged vehicles older than vehicle_spawns.CleanupTime
+	DELETE FROM object_data
+	WHERE CharacterID = 0
+		AND Damage = 1
+		AND SYSDATE() > last_updated + INTERVAL (
+			SELECT CleanupTime
+			FROM vehicle_spawns
+			WHERE vehicle_spawns.Classname = object_data.Classname
+			LIMIT 1) MINUTE;
 
 #remove empty tents older than seven days
         DELETE
@@ -79,9 +85,9 @@ BEGIN
                 FROM character_data
                 WHERE Alive=0 AND DATE(last_updated) < CURDATE() - INTERVAL 90 Day; 
 #Remove Bad Data
-       DELETE
-		 	FROM object_data
-         	WHERE Classname like '%_base';	
+				DELETE
+								FROM object_data
+								WHERE Classname like '%_base';
 			
 #Remove wire if the owner has died.						
 		DELETE
@@ -89,9 +95,10 @@ BEGIN
 			USING Object_DATA, Character_DATA
 				WHERE Object_DATA.Classname = 'Wire_cat1'
 					AND Object_DATA.CharacterID = Character_DATA.CharacterID
-					AND Character_DATA.Alive = 0			
-END;;
+					AND Character_DATA.Alive = 0;
+END ;;
 DELIMITER ;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;

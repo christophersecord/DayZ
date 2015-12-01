@@ -1,4 +1,4 @@
-set root=E:\games\dayz_source\DayZ
+set root=E:\games\dayz\source\sahraniPVE
 
 :: directory in which client code is located
 set clientSource=%root%\client
@@ -13,10 +13,10 @@ set tools=%root%\BITools
 set keyFiles=%root%\keys
 
 :: location to deploy the client files
-set clientDeploy=E:\games\dayz\clients\vanilla
+set clientDeploy=E:\games\dayz\clients\SahraniPvE
 
 :: location to deploy the server files
-set serverDeploy=E:\games\dayz\servers\vanilla
+set serverDeploy=E:\games\dayz\servers\SahraniPvE
 
 :: the name of the directories into which the client and server PBOs will be placed
 :: also, the name of the authority name for the key

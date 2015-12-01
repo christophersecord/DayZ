@@ -23,8 +23,27 @@ switch (_item) do {
 	case "ItemPainkiller": {
 		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\painkiller.sqf";
 	};
+	//Antibiotic's system
 	case "ItemAntibiotic": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+		_id = [player,"ItemAntibiotic"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+	};
+	case "ItemAntibiotic1": {
+		_id = [player,"ItemAntibiotic1"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+	};
+	case "ItemAntibiotic2": {
+		_id = [player,"ItemAntibiotic2"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+	};
+	case "ItemAntibiotic3": {
+		_id = [player,"ItemAntibiotic3"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+	};
+	case "ItemAntibiotic4": {
+		_id = [player,"ItemAntibiotic4"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+	};
+	case "ItemAntibiotic5": {
+		_id = [player,"ItemAntibiotic5"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
+	};
+	case "ItemAntibiotic6": {
+		_id = [player,"ItemAntibiotic6"] execVM "\z\addons\dayz_code\medical\antibiotics.sqf";
 	};
 	case "ItemAntibacterialWipe": {
 		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\wipes.sqf";
@@ -40,35 +59,38 @@ switch (_item) do {
 	case "transfusionKit": {
 		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\fillBloodBag.sqf";
 	};
+	case "emptyBloodBag": {
+		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\fillBloodBag.sqf";
+	};
 	case "ItemSepsisBandage": {
 		_id = [0,0,0,[player,"ItemSepsisBandage"]] execVM "\z\addons\dayz_code\medical\bandage.sqf";
 	};
 	case "wholeBloodBagANEG": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagANEG"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagAPOS": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagAPOS"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagBNEG": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagBNEG"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagBPOS": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagBPOS"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagABNEG": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagABNEG"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagABPOS": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagABPOS"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagONEG": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagONEG"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "wholeBloodBagOPOS": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
+		_id = [player,"wholeBloodBagOPOS"] execVM "\z\addons\dayz_code\medical\selfbloodbag.sqf";
 	};
 	case "equip_woodensplint": {
-		_id = [0,0,0,[player]] execVM "\z\addons\dayz_code\medical\brokeLeg.sqf";
+		_id = [player,"equip_woodensplint"] execVM "\z\addons\dayz_code\medical\brokeBones.sqf";
 	};
 };
 if (vehicle player != player) then {

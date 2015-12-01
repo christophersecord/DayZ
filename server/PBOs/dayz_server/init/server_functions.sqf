@@ -8,6 +8,9 @@ BIS_MPF_remoteExecutionServer = {
 	};
 };
 
+call compile preprocessFileLineNumbers "\z\addons\dayz_code\util\compile.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_code\loot\compile.sqf";
+
 BIS_Effects_Burn =			{};
 server_playerLogin =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerLogin.sqf";
 server_playerSetup =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSetup.sqf";
@@ -19,21 +22,16 @@ server_deleteObj =			compile preprocessFileLineNumbers "\z\addons\dayz_server\co
 server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSync.sqf";
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
-server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnCrashSite.sqf";
-server_sendToClient =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_sendToClient.sqf";
 server_Wildgenerate =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_Wildgenerate.sqf";
 server_plantSpawner =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_plantSpawner.sqf";
-
-server_lootSpawner =      compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_lootSpawner.sqf";
-server_spawnLoot =      compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnLoot.sqf";
-server_buildingLoot =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_buildingLoot.sqf";
+base_fireMonitor = compile preprocessFileLineNumbers "\z\addons\dayz_code\system\fire_monitor.sqf";
 
 server_systemCleanup =    compile preprocessFileLineNumbers "\z\addons\dayz_server\system\server_cleanup.sqf";
 
 spawnComposition = compile preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectMapper.sqf"; //"\z\addons\dayz_code\compile\object_mapper.sqf";
-fn_bases = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn_bases.sqf";
-spawn_carePackages =            compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_carePkgs.sqf";
 
+//eventHandlers
+server_sendToClient =		compile preprocessFileLineNumbers "\z\addons\dayz_server\eventHandlers\server_sendToClient.sqf";
 
 server_medicalSync = {
 	_player = _this select 0;
@@ -54,6 +52,18 @@ server_medicalSync = {
 	_player setVariable["rh_factor",(_array select 12)]; //12
 	_player setVariable["messing",(_array select 13)]; //13
 	_player setVariable["blood_testdone",(_array select 14)]; //14
+};
+
+dayz_Achievements = {
+	_achievementID = (_this select 0) select 0;
+	_player = (_this select 0) select 1;
+	_playerOwnerID = owner _player;
+	
+	_achievements = _player getVariable "Achievements";
+	
+	_achievements set [_achievementID,1];
+	
+	_player setVariable ["Achievements",_achievements];
 };
 
 vehicle_handleServerKilled = {

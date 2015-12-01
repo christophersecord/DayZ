@@ -1,6 +1,6 @@
 private ["_started","_finished","_animState","_isMedic","_id","_unit"];
-_unit = (_this select 3) select 0;
-_item = (_this select 3) select 1;
+_unit = _this select 0;
+_item = _this select 1;
 
 player removeMagazine _item;
 
@@ -41,8 +41,17 @@ r_doLoop = false;
 
 if (_finished) then {
 	if (_unit == player) then {
+		//give to player, Ie the player fixed himself
+		
 		//Self Healing
 		_id = [player,player] execVM "\z\addons\dayz_code\medical\publicEH\medMorphine.sqf";
+	} else {
+		//give to remote player, ie the player fixed another player
+		
+		//Give humanity reward to player giving the morphine to another player.
+		if (_item in ["ItemMorphine"]) then {
+			[player,50] call player_humanityChange;
+		};
 	};
 
 	PVDZ_send = [_unit,"Morphine",[_unit,player]];
