@@ -12,7 +12,7 @@ mkdir %serverDeploy%\@%serverName%\addons
 %tools%\cpbo.exe -y -p %serverSource%\PBOs\dayz_server %serverDeploy%\@%serverName%\addons\dayz_server.pbo
 
 :: copy key for verifying client PBO
-copy %keyFiles%\%modName%.bikey %serverDeploy%\%modName%.bikey
+copy %keyFiles%\%modName%.bikey %serverDeploy%\Keys\%modName%.bikey
 
 :: binaries
 xcopy %serverSource%\binaries %ServerDeploy% /E /I /Y
